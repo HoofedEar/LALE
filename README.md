@@ -1,4 +1,4 @@
-This fork is by anotak for updating Fatories's abandoned LALE project.
+This ia fork of a fork that is by anotak for updating Fatories's abandoned LALE project.
 Here is the original readme by Fatories:
 
 # LALE
