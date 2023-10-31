@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GBHL;
+﻿using GBHL;
 
-namespace LALE
+namespace LALE;
+
+public class Patch
 {
-    class Patch
+    public GBFile gb;
+
+    public Patch(GBFile g)
     {
-        public GBFile gb;
+        gb = g;
+    }
 
-        public Patch(GBFile g)
+    public void DefaultMusic(bool music)
+    {
+        if (music)
         {
-            gb = g;
+            gb.WriteBytes(0x8156, new byte[] { 0x58, 0x41 });
+            gb.WriteByte(0xBB47, 0);
+            Properties.Settings.Default.DefaultMusic = true;
+            Properties.Settings.Default.Save();
         }
-
-        public void defaultMusic(bool music)
+        else
         {
-            if (music)
-            {
-                gb.WriteBytes(0x8156, new byte[] { 0x58, 0x41 });
-                gb.WriteByte(0xBB47, 0);
-                LALE.Properties.Settings.Default.DefaultMusic = true;
-                LALE.Properties.Settings.Default.Save();
-            }
-            else
-            {
-                gb.WriteBytes(0x8156, new byte[] { 0xA2, 0x41 });
-                gb.WriteByte(0xBB47, 0x41);
-                LALE.Properties.Settings.Default.DefaultMusic = false;
-                LALE.Properties.Settings.Default.Save();
-            }
+            gb.WriteBytes(0x8156, new byte[] { 0xA2, 0x41 });
+            gb.WriteByte(0xBB47, 0x41);
+            Properties.Settings.Default.DefaultMusic = false;
+            Properties.Settings.Default.Save();
         }
     }
 }

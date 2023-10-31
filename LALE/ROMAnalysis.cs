@@ -71,7 +71,7 @@ namespace LALE
                         foreach (byte id in pair.Value)
                         {
                             sb.Append("\n\t");
-                            sb.Append(Names.GetName(Names.sprites,id));
+                            sb.Append(Names.GetName(Names.Sprites,id));
                             sb.Append(",");
                         }
                         sb.Length = sb.Length - 1;
@@ -88,7 +88,7 @@ namespace LALE
                     foreach (KeyValuePair<byte, HashSet<Room>> pair in spritelocationinfo)
                     {
                         sb.Append("sprite  '");
-                        sb.Append(Names.GetName(Names.sprites, pair.Key));
+                        sb.Append(Names.GetName(Names.Sprites, pair.Key));
                         sb.Append("' in rooms:\n");
                         foreach (Room room in pair.Value)
                         {
@@ -121,7 +121,7 @@ namespace LALE
                     foreach (KeyValuePair<byte, HashSet<int>> pair in reversespritebankinfo)
                     {
                         sb.Append("sprite '");
-                        sb.Append(Names.GetName(Names.sprites, pair.Key));
+                        sb.Append(Names.GetName(Names.Sprites, pair.Key));
                         sb.Append("':\n\t");
                         foreach (int id in pair.Value)
                         {
@@ -143,7 +143,7 @@ namespace LALE
         {
             dungeonDrawer.getWallsandFloor(dungeonIndex, mapIndex, true);
 
-            sprites.loadObjects(false, dungeonIndex, mapIndex);
+            sprites.LoadObjects(false, dungeonIndex, mapIndex);
 
 
             DoSprites(dungeonDrawer.spriteBank, dungeonIndex,mapIndex, false); //(dungeonIndex <= 5 ? 0x100 : 0x200));
@@ -151,12 +151,12 @@ namespace LALE
 
         public void DoOverworld(byte mapIndex)
         {
-            sprites.loadObjects(true, 0, mapIndex);
+            sprites.LoadObjects(true, 0, mapIndex);
 
-            overworldDrawer.getFloor(mapIndex, false);
-            overworldDrawer.getCollisionDataOverworld(mapIndex, false);
+            overworldDrawer.GetFloor(mapIndex, false);
+            overworldDrawer.GetCollisionDataOverworld(mapIndex, false);
             List<Warps> warps = overworldDrawer.warps;
-            overworldDrawer.getCollisionDataOverworld(mapIndex, true);
+            overworldDrawer.GetCollisionDataOverworld(mapIndex, true);
 
             foreach (Warps w1 in overworldDrawer.warps) 
             {

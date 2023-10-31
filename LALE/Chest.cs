@@ -1,55 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GBHL;
-namespace LALE
+﻿using GBHL;
+namespace LALE;
+
+internal class Chest
 {
-    class Chest
+    private readonly GBFile gb;
+    private readonly byte dungeon;
+    private readonly byte map;
+    private readonly bool overworld;
+    public byte chestData;
+
+    public Chest(GBFile g, bool overWorld, byte dung, byte mapData)
     {
+        gb = g;
+        dungeon = dung;
+        map = mapData;
+        overworld = overWorld;
+        LoadChestData();
+    }
 
-        GBFile gb;
-        byte dungeon;
-        byte map;
-        bool overworld;
-        int location;
-        public byte chestData;
-
-        public Chest(GBHL.GBFile g, bool overWorld, byte dung, byte Map)
+    private void LoadChestData()
+    {
+        if (overworld)
         {
-            gb = g;
-            dungeon = dung;
-            map = Map;
-            overworld = overWorld;
-            loadChestData();
+            gb.BufferLocation = 0x50560 + map;
+            chestData = gb.ReadByte();
         }
-
-        private void loadChestData()
+        else switch (dungeon)
         {
-            if (overworld)
-            {
-                gb.BufferLocation = 0x50560 + map;
-                location = gb.BufferLocation;
-                chestData = gb.ReadByte();
-            }
-            else if (dungeon < 6 || dungeon >= 0x1A && dungeon != 0xFF)
-            {
+            case < 6:
+            case >= 0x1A when dungeon != 0xFF:
                 gb.BufferLocation = 0x50660 + map;
-                location = gb.BufferLocation;
                 chestData = gb.ReadByte();
-            }
-            else if (dungeon >= 6 && dungeon < 0x1A)
-            {
+                break;
+            case >= 6 and < 0x1A:
                 gb.BufferLocation = 0x50760 + map;
-                location = gb.BufferLocation;
                 chestData = gb.ReadByte();
-            }
-            else if (dungeon == 0xFF)
-            {
+                break;
+            case 0xFF:
                 gb.BufferLocation = 0x50860 + map;
-                location = gb.BufferLocation;
                 chestData = gb.ReadByte();
-            }
+                break;
         }
     }
 }

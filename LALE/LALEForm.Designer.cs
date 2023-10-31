@@ -958,7 +958,7 @@
             this.cSideview.TabIndex = 19;
             this.cSideview.Text = "Side View";
             this.cSideview.UseVisualStyleBackColor = true;
-            this.cSideview.CheckedChanged += new System.EventHandler(this.cSideview_CheckedChanged);
+            this.cSideview.CheckedChanged += new System.EventHandler(this.cSideView_CheckedChanged);
             // 
             // pMinimapD
             // 
@@ -1021,7 +1021,7 @@
             this.cSideview2.TabIndex = 19;
             this.cSideview2.Text = "Side View";
             this.cSideview2.UseVisualStyleBackColor = true;
-            this.cSideview2.CheckedChanged += new System.EventHandler(this.cSideview_CheckedChanged);
+            this.cSideview2.CheckedChanged += new System.EventHandler(this.cSideView_CheckedChanged);
             // 
             // label1
             // 
