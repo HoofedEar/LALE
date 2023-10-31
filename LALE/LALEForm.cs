@@ -89,8 +89,8 @@ public partial class LALEForm : Form
 
         //if (comboBox1.SelectedIndex != 0)
         // comboBox1.SelectedIndex = 0;
-        if (tabControl1.SelectedIndex != 0)
-            tabControl1.SelectedIndex = 0; // reset to overworld
+        if (tabMapType.SelectedIndex != 0)
+            tabMapType.SelectedIndex = 0; // reset to overworld
         nMap.Enabled = true;
         comboBox1.Enabled = true;
         cSpecialTiles.Enabled = true;
@@ -327,8 +327,8 @@ public partial class LALEForm : Form
 
         // not overworld
         if (
-            (tabControl1.SelectedIndex != 0 && mapIndex == 0xF5 && dungeonIndex >= 0x1A)
-            || tabControl1.SelectedIndex != 0 && mapIndex == 0xF5 && dungeonIndex < 6
+            (tabMapType.SelectedIndex != 0 && mapIndex == 0xF5 && dungeonIndex >= 0x1A)
+            || tabMapType.SelectedIndex != 0 && mapIndex == 0xF5 && dungeonIndex < 6
         )
         {
             cMagGlass.Visible = true;
@@ -465,7 +465,7 @@ public partial class LALEForm : Form
     private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (pTiles.Image == null) return;
-        switch (tabControl1.SelectedIndex)
+        switch (tabMapType.SelectedIndex)
         {
             // overworld
             case 0:
@@ -1212,7 +1212,7 @@ public partial class LALEForm : Form
 
     private void cSideView_CheckedChanged(object sender, EventArgs e)
     {
-        sideView = tabControl1.SelectedIndex == 2 ? cSideview2.Checked : cSideview.Checked;
+        sideView = tabMapType.SelectedIndex == 2 ? cSideview2.Checked : cSideview.Checked;
         LoadSandA();
         LoadTileset();
         drawDungeon();
@@ -1251,7 +1251,7 @@ public partial class LALEForm : Form
         nEventID.Value = dungeonDrawer.eventID;
         nEventTrigger.Value = dungeonDrawer.eventTrigger;
         label18.Text = @"Location: 0x" + dungeonDrawer.eventDataLocation.ToString("X");
-        if (tabControl1.SelectedIndex == 2 && mapIndex == 0xF5 && dungeonIndex is >= 0x1A or < 6)
+        if (tabMapType.SelectedIndex == 2 && mapIndex == 0xF5 && dungeonIndex is >= 0x1A or < 6)
             cMagGlass.Visible = true;
         else
             cMagGlass.Visible = false;
@@ -1944,7 +1944,7 @@ public partial class LALEForm : Form
     private void toolChestEditor_Click(object sender, EventArgs e)
     {
         if (pTiles.Image == null) return;
-        var CE = new ChestEditor(chestData);
+        var CE = new ChestEditor(chestData, tabMapType.SelectedIndex);
         CE.ShowDialog();
         if (CE.DialogResult == DialogResult.OK)
             chestData = CE.chestData;
@@ -1952,7 +1952,7 @@ public partial class LALEForm : Form
 
     private void toolMiniMapEditor_Click(object sender, EventArgs e)
     {
-        if (pTiles.Image == null || tabControl1.SelectedIndex == 2) return;
+        if (pTiles.Image == null || tabMapType.SelectedIndex == 2) return;
         var bmp = new Bitmap(128, 128);
         var fp = new FastPixel(bmp);
         var src = !overWorld ? new FastPixel((Bitmap)pMinimapD.Image) : new FastPixel((Bitmap)pMinimap.Image);
@@ -2144,7 +2144,7 @@ public partial class LALEForm : Form
 
     private void exportMapToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (pTiles.Image == null || !overLay || tabControl1.SelectedIndex != 0) return;
+        if (pTiles.Image == null || !overLay || tabMapType.SelectedIndex != 0) return;
         var s = new SaveFileDialog();
         s.Title = @"Export Map Group";
         s.Filter = @"PNG Files (*.png)|*.png";
@@ -2222,7 +2222,7 @@ public partial class LALEForm : Form
 
     private void cMagGlass_CheckedChanged(object sender, EventArgs e)
     {
-        if (tabControl1.SelectedIndex == 1)
+        if (tabMapType.SelectedIndex == 1)
         {
             cMagGlass.Checked = cMagGlass1.Checked;
         }
@@ -2373,7 +2373,7 @@ public partial class LALEForm : Form
 
     private void exportDungeonToolStripMenuItem_Click(object sender, EventArgs e)
     {
-        if (pTiles.Image == null || overLay || tabControl1.SelectedIndex != 1) return;
+        if (pTiles.Image == null || overLay || tabMapType.SelectedIndex != 1) return;
         var s = new SaveFileDialog();
         s.Title = @"Export Dungeon Map Group";
         s.Filter = @"PNG Files (*.png)|*.png";
